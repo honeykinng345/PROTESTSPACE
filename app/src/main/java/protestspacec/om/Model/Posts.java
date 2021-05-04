@@ -5,8 +5,6 @@ public class Posts {
     String name,postDescription,postImage,postid,posttTitle,timeStamp,uid;
 
     public Posts() {
-
-
     }
 
     public Posts(String name, String postDescription, String postImage, String postid, String posttTitle, String timeStamp, String uid) {
