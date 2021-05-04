@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#fff"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="8dp"
+    app:cardMaxElevation="10dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:background="@null"
+            android:id="@+id/userImage"
+            android:src="@drawable/ic_baseline_person"
+            android:layout_height="80dp">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/_7ssp"
+            android:text="User Name"
+            android:id="@+id/userName"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_toEndOf="@+id/userImage"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/date"
+            android:text="20/05/2021"
+            android:layout_below="@+id/userName"
+            android:layout_marginStart="@dimen/_7ssp"
+            android:layout_toEndOf="@+id/userImage"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/time"
+            android:text="10:50 AM"
+            android:layout_below="@+id/userName"
+        android:layout_toEndOf="@+id/date"
+            android:layout_marginStart="@dimen/_7ssp"
+
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/relavtive2"
+            android:layout_below="@+id/userImage"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Hello this is the app And The collection of the host now i will try my best "
+                android:id="@+id/textDiscription"
+android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_below="@+id/textDiscription"
+               android:src="@drawable/android"
+                android:layout_marginTop="10dp"
+    android:id="@+id/postImage"
+                android:layout_height="200dp">
+
+            </ImageView>
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+android:background="@drawable/shape_rect02"
+            android:layout_marginTop="5dp"
+
+            android:padding="5dp"
+
+            android:layout_below="@+id/relavtive2"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Like"
+                android:drawablePadding="@dimen/_7ssp"
+                android:layout_marginStart="10dp"
+                android:padding="10dp"
+                android:id="@+id/like"
+             android:drawableLeft="@drawable/ic_baseline_thumb_up_24"
+                android:textSize="15dp"
+                android:textColor="#000"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Comment"
+
+
+                android:padding="10dp"
+                android:drawablePadding="@dimen/_7ssp"
+
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/message"
+                android:textSize="15dp"
+                android:textColor="#000"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Share"
+android:drawablePadding="@dimen/_7ssp"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+       android:id="@+id/share"
+                android:textSize="15dp"
+                android:visibility="gone"
+                android:drawableLeft="@drawable/ic_baseline_share_24"
+                android:textColor="#000"
+                android:layout_marginEnd="@dimen/_7ssp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Hire"
+                android:drawablePadding="@dimen/_7ssp"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+android:id="@+id/hire"
+                android:visibility="gone"
+                android:textSize="15dp"
+                android:drawableLeft="@drawable/ic_hire"
+                android:textColor="#000"
+                android:layout_marginEnd="@dimen/_7ssp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

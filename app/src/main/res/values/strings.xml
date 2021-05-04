@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PROTEST SPACE</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_requets">Requests</string>
+
+</resources>

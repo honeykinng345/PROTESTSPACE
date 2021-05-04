@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "121268450677",
+    "firebase_url": "https://wallpapercomplete-5c856.firebaseio.com",
+    "project_id": "wallpapercomplete-5c856",
+    "storage_bucket": "wallpapercomplete-5c856.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121268450677:android:cdb0f7bb4201edac74cf3c",
+        "android_client_info": {
+          "package_name": "protestspacec.om"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121268450677-brcs5pa74e7bouoa1f4sobknuj7e71lj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvBVbwPXjPQcuq0O3WOIXoMU093yc_c64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121268450677-brcs5pa74e7bouoa1f4sobknuj7e71lj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

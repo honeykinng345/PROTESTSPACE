@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/tool_bar"
+        android:padding="10dp"
+        android:id="@+id/relavtive1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/whiteColor"
+            android:text="Protest Space"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            >
+
+        </TextView>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_add"
+            android:layout_marginEnd="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:id="@+id/addNewPost"
+            android:layout_alignParentEnd="true"
+            android:layout_height="wrap_content">
+
+        </ImageButton>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_baseline_exit_to_app_24"
+            android:layout_marginEnd="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:id="@+id/btnLogout"
+
+           android:layout_toStartOf="@+id/addNewPost"
+            android:layout_height="wrap_content">
+
+        </ImageButton>
+    </RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
+        app:itemTextColor="@drawable/bottom_nav_icon_color_selector"
+        app:labelVisibilityMode="labeled"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:menu="@menu/bottom_nav"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/relavtive1"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize">
+    </FrameLayout>
+
+
+</RelativeLayout>
