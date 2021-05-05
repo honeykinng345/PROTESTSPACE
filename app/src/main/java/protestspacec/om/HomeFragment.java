@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import protestspacec.om.Model.Posts;
+import protestspacec.om.adapters.MyPostAdapter;
 
 public class HomeFragment extends Fragment {
 
@@ -27,6 +29,7 @@ public class HomeFragment extends Fragment {
 
     // Arraylist for storing data
     private ArrayList<Posts> postsModelArrayList;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,17 +54,14 @@ public class HomeFragment extends Fragment {
 
                 postsModelArrayList.clear();
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                  Posts model = ds.getValue(Posts.class);
+                    Posts model = ds.getValue(Posts.class);
                     postsModelArrayList.add(model);
 
-
-
-
-
                 }
-                PostAdapter Adapter = new PostAdapter(getContext(),postsModelArrayList);
+                //PostAdapter Adapter = new PostAdapter(getContext(),postsModelArrayList);
+                MyPostAdapter Adapter = new MyPostAdapter(getContext(), postsModelArrayList);
 
                 // below line is for setting a layout manager for our recycler view.
 

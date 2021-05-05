@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import protestspacec.om.Model.Posts;
+import protestspacec.om.adapters.MyPostAdapter;
 
 public class ProfileFragment extends Fragment {
 

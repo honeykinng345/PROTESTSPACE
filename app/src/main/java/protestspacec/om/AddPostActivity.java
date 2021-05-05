@@ -16,13 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -124,28 +122,21 @@ String  title , description;
             //save to db
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-            ref.child(timeStamp).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
+            ref.child(timeStamp).setValue(hashMap).addOnSuccessListener(aVoid -> {
 
 
+                progressDialog.dismiss();
+                Toast.makeText(AddPostActivity.this,"Infromation Is Updated Succful",Toast.LENGTH_SHORT).show();
+                clearData();
 
-                    progressDialog.dismiss();
-                    Toast.makeText(AddPostActivity.this,"Infromation Is Updated Succful",Toast.LENGTH_SHORT).show();
-                    clearData();
 
+            }).addOnFailureListener(e -> {
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
+                //failed Updating Db
+                progressDialog.dismiss();
+                Toast.makeText(AddPostActivity.this,""+e,Toast.LENGTH_SHORT).show();
+                clearData();
 
-                    //failed Updating Db
-                    progressDialog.dismiss();
-                    Toast.makeText(AddPostActivity.this,""+e,Toast.LENGTH_SHORT).show();
-                    clearData();
-
-                }
             });
 
         }else {
@@ -199,28 +190,20 @@ String  title , description;
         //save to db
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-        ref.child(timeStamp).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
+        ref.child(timeStamp).setValue(hashMap).addOnSuccessListener(aVoid -> {
+
+            progressDialog.dismiss();
+            Toast.makeText(AddPostActivity.this,"Infromation Is Updated Succful",Toast.LENGTH_SHORT).show();
+            clearData();
 
 
+        }).addOnFailureListener(e -> {
 
-                progressDialog.dismiss();
-                Toast.makeText(AddPostActivity.this,"Infromation Is Updated Succful",Toast.LENGTH_SHORT).show();
-                clearData();
+            //failed Updating Db
+            progressDialog.dismiss();
+            Toast.makeText(AddPostActivity.this,""+e,Toast.LENGTH_SHORT).show();
+            clearData();
 
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-                //failed Updating Db
-                progressDialog.dismiss();
-                Toast.makeText(AddPostActivity.this,""+e,Toast.LENGTH_SHORT).show();
-                clearData();
-
-            }
         });
     }
 

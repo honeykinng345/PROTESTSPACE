@@ -17,83 +17,85 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="80dp"
-            android:background="@null"
             android:id="@+id/userImage"
-            android:src="@drawable/ic_baseline_person"
-            android:layout_height="80dp">
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_person">
 
         </ImageView>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_marginStart="@dimen/_7ssp"
-            android:text="User Name"
             android:id="@+id/userName"
             style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_7ssp"
             android:layout_toEndOf="@+id/userImage"
-            android:layout_height="wrap_content">
+            android:text="User Name">
 
         </TextView>
+
         <TextView
-            android:layout_width="wrap_content"
             android:id="@+id/date"
-            android:text="20/05/2021"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/userName"
             android:layout_marginStart="@dimen/_7ssp"
             android:layout_toEndOf="@+id/userImage"
-            android:layout_height="wrap_content">
+            android:text="20/05/2021">
 
         </TextView>
 
         <TextView
-            android:layout_width="wrap_content"
             android:id="@+id/time"
-            android:text="10:50 AM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/userName"
-        android:layout_toEndOf="@+id/date"
             android:layout_marginStart="@dimen/_7ssp"
+            android:layout_toEndOf="@+id/date"
 
-            android:layout_height="wrap_content">
+            android:text="10:50 AM">
 
         </TextView>
 
 
         <LinearLayout
-            android:layout_width="match_parent"
             android:id="@+id/relavtive2"
-            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/userImage"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
-                android:text="Hello this is the app And The collection of the host now i will try my best "
                 android:id="@+id/textDiscription"
-android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_height="wrap_content">
+                android:text="Hello this is the app And The collection of the host now i will try my best "
+                android:textSize="20sp">
 
             </TextView>
 
             <ImageView
+                android:id="@+id/postImage"
                 android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:layout_below="@+id/textDiscription"
-               android:src="@drawable/android"
                 android:layout_marginTop="10dp"
-    android:id="@+id/postImage"
-                android:layout_height="200dp">
+                android:src="@drawable/android">
 
             </ImageView>
+
             <TextView
-                android:layout_width="wrap_content"
-                android:text="2likes"
                 android:id="@+id/likecount"
-                android:textSize="20sp"
-                 android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_height="wrap_content">
+                android:text="2 likes"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                android:textStyle="bold">
 
             </TextView>
 
@@ -102,77 +104,78 @@ android:textSize="20sp"
 
         <RelativeLayout
             android:layout_width="match_parent"
-android:background="@drawable/shape_rect02"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relavtive2"
+
             android:layout_marginTop="5dp"
 
-            android:padding="5dp"
-
-            android:layout_below="@+id/relavtive2"
-            android:layout_height="wrap_content">
+            android:background="@drawable/shape_rect02"
+            android:padding="5dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:text="Like"
-                android:drawablePadding="@dimen/_7ssp"
-                android:layout_marginStart="10dp"
-                android:padding="10dp"
                 android:id="@+id/like"
-             android:drawableLeft="@drawable/ic_baseline_thumb_up_24"
-                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:drawableLeft="@drawable/ic_baseline_thumb_up_24"
+                android:drawablePadding="@dimen/_7ssp"
+                android:padding="10dp"
+                android:text="Like"
                 android:textColor="#000"
-                android:layout_height="wrap_content">
+                android:textSize="15dp">
 
             </TextView>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:text="Comment"
                 android:id="@+id/comment"
-                android:padding="10dp"
-                android:drawablePadding="@dimen/_7ssp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:drawableLeft="@drawable/message"
-                android:textSize="15dp"
-                android:textColor="#000"
-                android:layout_height="wrap_content">
-
-            </TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Share"
-android:drawablePadding="@dimen/_7ssp"
-                android:padding="10dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-       android:id="@+id/share"
-                android:textSize="15dp"
-                android:visibility="gone"
-                android:drawableLeft="@drawable/ic_baseline_share_24"
-                android:textColor="#000"
-                android:layout_marginEnd="@dimen/_7ssp"
-                android:layout_height="wrap_content">
-
-            </TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Hire"
                 android:drawablePadding="@dimen/_7ssp"
                 android:padding="10dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-android:id="@+id/hire"
-                android:visibility="gone"
-                android:textSize="15dp"
-                android:drawableLeft="@drawable/ic_hire"
+                android:text="Comment"
                 android:textColor="#000"
+                android:textSize="15dp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_7ssp"
-                android:layout_height="wrap_content">
+                android:drawableLeft="@drawable/ic_baseline_share_24"
+                android:drawablePadding="@dimen/_7ssp"
+                android:padding="10dp"
+                android:text="Share"
+                android:textColor="#000"
+                android:textSize="15dp"
+                android:visibility="gone">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/hire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_7ssp"
+                android:drawableLeft="@drawable/ic_hire"
+                android:drawablePadding="@dimen/_7ssp"
+                android:padding="10dp"
+                android:text="Hire"
+                android:textColor="#000"
+                android:textSize="15dp"
+                android:visibility="gone">
 
             </TextView>
         </RelativeLayout>
 
     </RelativeLayout>
-
 
 
 </androidx.cardview.widget.CardView>

@@ -1,4 +1,4 @@
-package protestspacec.om;
+package protestspacec.om.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -18,11 +18,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import protestspacec.om.Model.Posts;
+import protestspacec.om.R;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
     private Context context;
     private ArrayList<Posts> posModelList;
     SharedPreferences preferences ;
+
+
 
     public PostAdapter(Context context, ArrayList<Posts> posModelList) {
         this.context = context;
@@ -63,6 +66,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         String formatTime = DateFormat.format("dd/MM/yyyy",calendar).toString();
         holder.date.setText(formatTime);
 
+
         // holder.postImage.setImageResource(model.getImage());
 
         if (model.getPostImage().equals("")|| model.getPostImage().equals(null)){
@@ -94,7 +98,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
     public class Viewholder extends RecyclerView.ViewHolder {
 
         ImageView postImage;
-        TextView date,time,description,userName,share,hire;
+        TextView date,time,description,userName,share,hire,likes;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -105,6 +109,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
            userName =  itemView.findViewById(R.id.userName);
            share =  itemView.findViewById(R.id.share);
            hire =  itemView.findViewById(R.id.hire);
+            likes =  itemView.findViewById(R.id.likecount);
 
         }
     }
