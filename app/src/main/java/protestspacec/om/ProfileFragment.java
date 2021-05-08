@@ -104,16 +104,16 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posModelList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Posts modelpost = ds.getValue(Posts.class);
-                    posModelList.add(modelpost);
-
-
+                    try {
+                        Posts modelpost = ds.getValue(Posts.class);
+                        posModelList.add(modelpost);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
                 MyPostAdapter myPostAdapter = new MyPostAdapter(getContext(), posModelList);
                 mypostreceyclerView.setAdapter(myPostAdapter);
                 myPostAdapter.notifyDataSetChanged();
-
-
             }
 
             @Override

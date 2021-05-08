@@ -2,12 +2,12 @@ package protestspacec.om.Model;
 
 public class Posts {
 
-    String likes,name,postDescription,postImage,postid,posttTitle,timeStamp,uid;
+    String likes,name,postDescription,postImage,postid,posttTitle,timeStamp,uid, comments;
 
     public Posts() {
     }
 
-    public Posts(String likes, String name, String postDescription, String postImage, String postid, String posttTitle, String timeStamp, String uid) {
+    public Posts(String likes, String name, String postDescription, String postImage, String postid, String posttTitle, String timeStamp, String uid, String comments) {
         this.likes = likes;
         this.name = name;
         this.postDescription = postDescription;
@@ -16,6 +16,15 @@ public class Posts {
         this.posttTitle = posttTitle;
         this.timeStamp = timeStamp;
         this.uid = uid;
+        this.comments = comments;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public String getLikes() {

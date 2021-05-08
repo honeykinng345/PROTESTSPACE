@@ -56,8 +56,12 @@ public class HomeFragment extends Fragment {
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                    Posts model = ds.getValue(Posts.class);
-                    postsModelArrayList.add(model);
+                    try {
+                        Posts model = ds.getValue(Posts.class);
+                        postsModelArrayList.add(model);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
 
                 }
                 //PostAdapter Adapter = new PostAdapter(getContext(),postsModelArrayList);

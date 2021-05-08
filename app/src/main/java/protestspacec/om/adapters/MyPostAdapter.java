@@ -2,6 +2,7 @@ package protestspacec.om.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 import protestspacec.om.Model.Posts;
+import protestspacec.om.PostDetailActivity;
 import protestspacec.om.R;
 
 public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder> {
@@ -81,7 +83,11 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         calendar.setTimeInMillis(Long.parseLong(timeStamp));
         String formatTime = DateFormat.format("dd/MM/yyyy", calendar).toString();
         holder.date.setText(formatTime);
-        holder.likes.setText(model.getLikes() + "Likes");
+        holder.likes.setText(model.getLikes() != null ? !model.getLikes().equals("0") ? model.getLikes() + " Likes" : null : null);
+        holder.commencCount.setText(model.getComments() != null ? !model.getComments().equals("0") ? model.getComments() + " Comments" : null : null);
+
+        holder.comment.setOnClickListener(v -> openPostDetail(model));
+        holder.commencCount.setOnClickListener(v -> openPostDetail(model));
 
         holder.likeBtn.setOnClickListener(v -> {
             int likes = model.getLikes() == null ? 0 : Integer.parseInt(model.getLikes());
@@ -129,6 +135,14 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         }
     }
 
+    private void openPostDetail(Posts model) {
+        Intent intent = new Intent(context, PostDetailActivity.class);
+        intent.putExtra("postID", model.getPostid());
+        intent.putExtra("likes", model.getLikes());
+        intent.putExtra("comments", model.getComments());
+        context.startActivity(intent);
+    }
+
     private void setLikes(ViewHolder holder, String postid) {
         mLikesRef.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -155,7 +169,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView postImage;
-        TextView date, time, description, userName, share, hire, likes, likeBtn;
+        TextView date, time, description, userName, share, hire, likes, likeBtn, comment, commencCount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -170,6 +184,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
             hire = itemView.findViewById(R.id.hire);
             likes = itemView.findViewById(R.id.likecount);
             likeBtn = itemView.findViewById(R.id.like);
+            comment = itemView.findViewById(R.id.comment);
+            commencCount = itemView.findViewById(R.id.commentcount);
 
         }
     }
