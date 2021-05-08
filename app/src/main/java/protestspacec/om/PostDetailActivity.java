@@ -177,7 +177,7 @@ public class PostDetailActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(commentTxt) && !mProcessComment) {
             mProcessComment = true;
 
-            Comment c = new Comment(String.valueOf(System.currentTimeMillis()), commentTxt, myUid, myUname,
+            Comment c = new Comment(String.valueOf(System.currentTimeMillis()), commentTxt, myUid, Helper.fetchUserId(this),
                     myImg == null ? null : myImg.toString());
 
             mCommentRef.child(postId).child(c.getcId()).setValue(c).addOnSuccessListener(aVoid -> {
