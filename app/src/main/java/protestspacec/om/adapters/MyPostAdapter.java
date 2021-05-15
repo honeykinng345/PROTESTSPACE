@@ -1,15 +1,21 @@
 package protestspacec.om.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,26 +32,37 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
+import protestspacec.om.Helper;
+import protestspacec.om.MainActivity;
 import protestspacec.om.Model.Posts;
+import protestspacec.om.Model.Qoutation;
 import protestspacec.om.PostDetailActivity;
 import protestspacec.om.R;
+import protestspacec.om.RequetsFragment;
 
 public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder> {
     private Context context;
     private ArrayList<Posts> posModelList;
-    SharedPreferences preferences;
+    private boolean isProfileFragment;
 
-    String myUid;
-    DatabaseReference mLikesRef, mPostRef;
+    SharedPreferences preferences;
+    MainActivity mainActivity;
+
+    String myUid, mUname;
+    DatabaseReference mLikesRef, mPostRef, mQoutationRef;
     boolean mProcessLike = false;
 
-    public MyPostAdapter(Context context, ArrayList<Posts> posModelList) {
+    public MyPostAdapter(Context context, ArrayList<Posts> posModelList, boolean isProfileFragment) {
         this.context = context;
         this.posModelList = posModelList;
+        this.isProfileFragment = isProfileFragment;
 
         myUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        mUname = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         mLikesRef = FirebaseDatabase.getInstance().getReference().child("Likes");
         mPostRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        mQoutationRef = FirebaseDatabase.getInstance().getReference().child("Qoutation");
+        mainActivity = (MainActivity) context;
     }
 
     @NonNull
@@ -62,6 +79,19 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         preferences = context.getSharedPreferences("MyPref", 0);
         String s1 = preferences.getString("AccountType", "");
         Posts model = posModelList.get(position);
+
+        if (isProfileFragment) {
+            holder.itemView.setOnClickListener(v -> {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("postId", model.getPostid());
+                RequetsFragment fragment = new RequetsFragment();
+                fragment.setArguments(bundle);
+                mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            });
+        }
+
+
         if (Objects.equals(s1, "User")) {
 
             holder.hire.setVisibility(View.GONE);
@@ -69,10 +99,13 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
 
         } else {
 
-            holder.hire.setVisibility(View.GONE);
+            holder.hire.setVisibility(View.VISIBLE);
             holder.share.setVisibility(View.GONE);
 
         }
+
+        holder.hire.setOnClickListener(v -> sendQoutation(model));
+
         //
         // holder.time.setText(model.getTime());
         holder.description.setText(model.getPostDescription());
@@ -95,14 +128,14 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
             mLikesRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (mProcessLike){
-                        if (dataSnapshot.child(model.getPostid()).hasChild(myUid)){
+                    if (mProcessLike) {
+                        if (dataSnapshot.child(model.getPostid()).hasChild(myUid)) {
                             //already like so remove like
-                            mPostRef.child(model.getPostid()).child("likes").setValue(""+(likes-1));
+                            mPostRef.child(model.getPostid()).child("likes").setValue("" + (likes - 1));
                             mLikesRef.child(model.getPostid()).child(myUid).removeValue();
-                        }else {
+                        } else {
                             //nnot liked yet , like it
-                            mPostRef.child(model.getPostid()).child("likes").setValue(""+(likes+1));
+                            mPostRef.child(model.getPostid()).child("likes").setValue("" + (likes + 1));
                             mLikesRef.child(model.getPostid()).child(myUid).setValue("Liked");
                         }
                         mProcessLike = false;
@@ -135,6 +168,36 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         }
     }
 
+    private void sendQoutation(Posts model) {
+
+        View qouteView = mainActivity.getLayoutInflater().inflate(R.layout.pop_qoutation, null);
+        EditText descriptionText = qouteView.findViewById(R.id.description);
+        EditText priceText = qouteView.findViewById(R.id.price);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(qouteView);
+
+        builder.setPositiveButton("Send", (dialog, which) -> {
+            String d = descriptionText.getText().toString().trim();
+            String p = priceText.getText().toString().trim();
+            if (!TextUtils.isEmpty(d) && !TextUtils.isEmpty(p)) {
+
+                String t = String.valueOf(System.currentTimeMillis());
+
+                Qoutation qoutation = new Qoutation(t, myUid, model.getPostid(), mUname, null, p, d);
+
+                mQoutationRef.child(model.getPostid()).child(myUid).setValue(qoutation).addOnSuccessListener(aVoid -> {
+                    Toast.makeText(context, "Qoutation sent successfully!", Toast.LENGTH_LONG).show();
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+            } else {
+                Toast.makeText(context, "fields can't be empty", Toast.LENGTH_LONG).show();
+            }
+
+        }).setNegativeButton("Cencel", (dialog, which) -> dialog.dismiss()).show();
+    }
+
     private void openPostDetail(Posts model) {
         Intent intent = new Intent(context, PostDetailActivity.class);
         intent.putExtra("postID", model.getPostid());
@@ -148,7 +211,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(postid).hasChild(myUid)){
+                if (dataSnapshot.child(postid).hasChild(myUid)) {
                     holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.liked, 0, 0, 0);
                     holder.likeBtn.setText("Liked");
                 }

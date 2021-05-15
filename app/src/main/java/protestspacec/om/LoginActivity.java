@@ -36,11 +36,12 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailET;
     @BindView(R.id.password)
     EditText password;
-SQLiteHandler myDbAdapter;
+    SQLiteHandler myDbAdapter;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +63,8 @@ SQLiteHandler myDbAdapter;
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait ");
-        preferences = getApplicationContext().getSharedPreferences("MyPref",0);
-       editor = preferences.edit();
-
-
+        preferences = getApplicationContext().getSharedPreferences("MyPref", 0);
+        editor = preferences.edit();
 
 
     }
@@ -85,24 +84,24 @@ SQLiteHandler myDbAdapter;
 
     private void logUser() {
 
-        String email,password1;
+        String email, password1;
 
         email = emailET.getText().toString().trim();
         password1 = password.getText().toString().trim();
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            Toast.makeText(this,"Inavlid Email",Toast.LENGTH_SHORT).show();
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Inavlid Email", Toast.LENGTH_SHORT).show();
             return;
 
         }
 
-        if (TextUtils.isEmpty(password1)){
-            Toast.makeText(this,"Password Feild Empty",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(password1)) {
+            Toast.makeText(this, "Password Feild Empty", Toast.LENGTH_SHORT).show();
         }
 
 
         progressDialog.setMessage("Logging In");
         progressDialog.show();
-        firebaseAuth.signInWithEmailAndPassword(email,password1).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        firebaseAuth.signInWithEmailAndPassword(email, password1).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
 
@@ -116,7 +115,7 @@ SQLiteHandler myDbAdapter;
             public void onFailure(@NonNull Exception e) {
                 progressDialog.dismiss();
 
-                Toast.makeText(LoginActivity.this,""+e,Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "" + e, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -126,8 +125,8 @@ SQLiteHandler myDbAdapter;
 
         progressDialog.setMessage("Checking User...");
 
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("online","true");
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("online", "true");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.child(firebaseAuth.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -138,7 +137,6 @@ SQLiteHandler myDbAdapter;
                 CheckUserType();
 
 
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -147,9 +145,7 @@ SQLiteHandler myDbAdapter;
                 //failed  to update
 
                 progressDialog.dismiss();
-                Toast.makeText(LoginActivity.this,""+e,Toast.LENGTH_SHORT).show();
-
-
+                Toast.makeText(LoginActivity.this, "" + e, Toast.LENGTH_SHORT).show();
 
 
             }
@@ -167,37 +163,37 @@ SQLiteHandler myDbAdapter;
         reference.orderByChild("uid").equalTo(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                    String accountType = ""+ds.child("accountType").getValue();
-                    String userEmail = ""+ds.child("email").getValue();
-                    String name = ""+ds.child("name").getValue();
+                    String accountType = "" + ds.child("accountType").getValue();
+                    String userEmail = "" + ds.child("email").getValue();
+                    String name = "" + ds.child("name").getValue();
 
-              boolean id =  myDbAdapter.insertData(name,userEmail);
-if (id){
-    Helper.message(LoginActivity.this,"Done"+id);
+                    boolean id = myDbAdapter.insertData(name, userEmail);
+                    if (id) {
+                        Helper.message(LoginActivity.this, "Done" + id);
 
-}else{
-    Helper.message(LoginActivity.this,"no"+id);
+                    } else {
+                        Helper.message(LoginActivity.this, "no" + id);
 
-}
+                    }
 
-                    if (accountType.equals("User")){
+                    if (accountType.equals("User")) {
 
                         //user is seller
 
                         progressDialog.dismiss();
-                         editor.putString("AccountType","User");
-                         editor.commit();
+                        editor.putString("AccountType", "User");
+                        editor.commit();
 
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
 
 
-                    }else {
+                    } else {
                         //user is buyer
                         progressDialog.dismiss();
-                        editor.putString("AccountType","Lawyer");
+                        editor.putString("AccountType", "Lawyer");
                         editor.commit();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();

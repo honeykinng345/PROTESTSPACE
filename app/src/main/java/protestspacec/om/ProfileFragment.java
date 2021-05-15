@@ -111,7 +111,7 @@ public class ProfileFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-                MyPostAdapter myPostAdapter = new MyPostAdapter(getContext(), posModelList);
+                MyPostAdapter myPostAdapter = new MyPostAdapter(getContext(), posModelList, true);
                 mypostreceyclerView.setAdapter(myPostAdapter);
                 myPostAdapter.notifyDataSetChanged();
             }

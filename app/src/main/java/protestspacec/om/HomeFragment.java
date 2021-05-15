@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,7 +64,7 @@ public class HomeFragment extends Fragment {
 
                 }
                 //PostAdapter Adapter = new PostAdapter(getContext(),postsModelArrayList);
-                MyPostAdapter Adapter = new MyPostAdapter(getContext(), postsModelArrayList);
+                MyPostAdapter Adapter = new MyPostAdapter(getContext(), postsModelArrayList, false);
 
                 // below line is for setting a layout manager for our recycler view.
 

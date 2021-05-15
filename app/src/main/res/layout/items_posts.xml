@@ -187,7 +187,7 @@
                 android:drawableLeft="@drawable/ic_hire"
                 android:drawablePadding="@dimen/_7ssp"
                 android:padding="10dp"
-                android:text="Hire"
+                android:text="Qoute"
                 android:textColor="#000"
                 android:textSize="15dp"
                 android:visibility="gone">
