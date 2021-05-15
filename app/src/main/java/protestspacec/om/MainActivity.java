@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
                     //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).addToBackStack(null).commit();
                     MainActivity.this.openFragment(new ProfileFragment());
                     return true;
-                case R.id.request:
+                /*case R.id.request:
                     MainActivity.this.openFragment(new RequetsFragment());
-                    return true;
+                    return true;*/
 
             }
             return true;
