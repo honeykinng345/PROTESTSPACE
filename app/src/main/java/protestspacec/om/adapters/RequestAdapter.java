@@ -1,6 +1,7 @@
 package protestspacec.om.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
+import protestspacec.om.MainActivity;
 import protestspacec.om.Model.Qoutation;
+import protestspacec.om.PaymentActivity;
 import protestspacec.om.R;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
@@ -50,14 +53,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         holder.uName.setText(qoutation.getUname());
         holder.descriptionText.setText(qoutation.getDescription());
         holder.priceText.setText(qoutation.getPrice());
-
         holder.acceptBtn.setOnClickListener(v -> requestAccepted(qoutation));
         holder.rejectBtn.setOnClickListener(v -> requestRejected(qoutation));
     }
 
     private void requestAccepted(Qoutation qoutation) {
         //payment work
-
+        Intent intent = new Intent(context, PaymentActivity.class);
+        intent.putExtra("price", qoutation.getPrice());
+        ((MainActivity)context).startActivityForResult(intent, 0);
     }
 
     private void requestRejected(Qoutation qoutation) {
