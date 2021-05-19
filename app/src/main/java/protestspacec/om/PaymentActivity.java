@@ -24,9 +24,9 @@ public class PaymentActivity extends AppCompatActivity {
     private WebView mWebView;
 
 
-    private final String Jazz_MerchantID      = "ENTER_MerchantID";
-    private final String Jazz_Password        = "ENTER_Password";
-    private final String Jazz_IntegritySalt   = "ENTER_IntegritySalt";
+    private final String Jazz_MerchantID      = "MC20074";
+    private final String Jazz_Password        = "54y106t28d";
+    private final String Jazz_IntegritySalt   = "96vcd891z8";
 
     private static final String paymentReturnUrl="http://localhost/order.php";
 
