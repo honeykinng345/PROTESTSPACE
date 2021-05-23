@@ -20,6 +20,9 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 public class PaymentActivity extends AppCompatActivity {
+
+    public String lawyerId;
+
     String postData = "";
     private WebView mWebView;
 
@@ -46,6 +49,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         Intent intentData = getIntent();
         String price = intentData.getStringExtra("price");
+        lawyerId = intentData.getStringExtra("lawyerId");
 
         Date Date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddkkmmss");
@@ -245,6 +249,7 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 }
 
+                i.putExtra("lawyerId", lawyerId);
                 setResult(RESULT_OK, i);
                 finish();
 

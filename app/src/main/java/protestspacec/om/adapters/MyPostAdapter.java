@@ -45,7 +45,6 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
     private ArrayList<Posts> posModelList;
     private boolean isProfileFragment;
 
-    SharedPreferences preferences;
     MainActivity mainActivity;
 
     String myUid, mUname;
@@ -76,8 +75,6 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        preferences = context.getSharedPreferences("MyPref", 0);
-        String s1 = preferences.getString("AccountType", "");
         Posts model = posModelList.get(position);
 
         if (isProfileFragment) {
@@ -92,7 +89,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         }
 
 
-        if (Objects.equals(s1, "User")) {
+        if (!Helper.isLawyer(context)) {
 
             holder.hire.setVisibility(View.GONE);
             holder.share.setVisibility(View.VISIBLE);
@@ -170,32 +167,49 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
 
     private void sendQoutation(Posts model) {
 
-        View qouteView = mainActivity.getLayoutInflater().inflate(R.layout.pop_qoutation, null);
-        EditText descriptionText = qouteView.findViewById(R.id.description);
-        EditText priceText = qouteView.findViewById(R.id.price);
+        mQoutationRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(model.getPostid()).hasChild(myUid)) {
+                    Toast.makeText(context, "already applied", Toast.LENGTH_LONG).show();
+                }else {
+                    View qouteView = mainActivity.getLayoutInflater().inflate(R.layout.pop_qoutation, null);
+                    EditText descriptionText = qouteView.findViewById(R.id.description);
+                    EditText priceText = qouteView.findViewById(R.id.price);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setView(qouteView);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setView(qouteView);
 
-        builder.setPositiveButton("Send", (dialog, which) -> {
-            String d = descriptionText.getText().toString().trim();
-            String p = priceText.getText().toString().trim();
-            if (!TextUtils.isEmpty(d) && !TextUtils.isEmpty(p)) {
+                    builder.setPositiveButton("Send", (dialog, which) -> {
+                        String d = descriptionText.getText().toString().trim();
+                        String p = priceText.getText().toString().trim();
+                        if (!TextUtils.isEmpty(d) && !TextUtils.isEmpty(p)) {
 
-                String t = String.valueOf(System.currentTimeMillis());
+                            String t = String.valueOf(System.currentTimeMillis());
 
-                Qoutation qoutation = new Qoutation(t, myUid, model.getPostid(), mUname, null, p, d);
+                            Qoutation qoutation = new Qoutation(t, myUid, model.getPostid(), model.getName(),
+                                    model.getPostImage(), model.getPostDescription(), mUname, null, p, d, false);
 
-                mQoutationRef.child(model.getPostid()).child(myUid).setValue(qoutation).addOnSuccessListener(aVoid -> {
-                    Toast.makeText(context, "Qoutation sent successfully!", Toast.LENGTH_LONG).show();
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                });
-            } else {
-                Toast.makeText(context, "fields can't be empty", Toast.LENGTH_LONG).show();
+                            mQoutationRef.child(model.getPostid()).child(myUid).setValue(qoutation).addOnSuccessListener(aVoid -> {
+                                Toast.makeText(context, "Qoutation sent successfully!", Toast.LENGTH_LONG).show();
+                            }).addOnFailureListener(e -> {
+                                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                            });
+                        } else {
+                            Toast.makeText(context, "fields can't be empty", Toast.LENGTH_LONG).show();
+                        }
+
+                    }).setNegativeButton("Cencel", (dialog, which) -> dialog.dismiss()).show();
+                }
             }
 
-        }).setNegativeButton("Cencel", (dialog, which) -> dialog.dismiss()).show();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(context, databaseError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 
     private void openPostDetail(Posts model) {
@@ -236,7 +250,6 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
 
             postImage = itemView.findViewById(R.id.postImage);
             date = itemView.findViewById(R.id.date);

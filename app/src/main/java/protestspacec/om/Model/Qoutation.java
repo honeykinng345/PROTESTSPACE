@@ -2,18 +2,55 @@ package protestspacec.om.Model;
 
 public class Qoutation {
 
-    String id, uid, pid, uname, uimage, price, description;
+    String id, uid, pid, pname, pimage, pdescription, uname, uimage, price, description;
+    boolean isAccepted;
 
     public Qoutation(){}
 
-    public Qoutation(String id, String uid, String pid, String uname, String uimage, String price, String description) {
+    public Qoutation(String id, String uid, String pid, String pname, String pimage, String pdescription, String uname, String uimage, String price, String description, boolean isAccepted) {
         this.id = id;
         this.uid = uid;
         this.pid = pid;
+        this.pname = pname;
+        this.pimage = pimage;
+        this.pdescription = pdescription;
         this.uname = uname;
         this.uimage = uimage;
         this.price = price;
         this.description = description;
+        this.isAccepted = isAccepted;
+    }
+
+    public boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        isAccepted = accepted;
+    }
+
+    public String getPname() {
+        return pname;
+    }
+
+    public void setPname(String pname) {
+        this.pname = pname;
+    }
+
+    public String getPimage() {
+        return pimage;
+    }
+
+    public void setPimage(String pimage) {
+        this.pimage = pimage;
+    }
+
+    public String getPdescription() {
+        return pdescription;
+    }
+
+    public void setPdescription(String pdescription) {
+        this.pdescription = pdescription;
     }
 
     public String getId() {

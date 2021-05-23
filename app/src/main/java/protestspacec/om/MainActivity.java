@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -46,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
                     //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).addToBackStack(null).commit();
                     MainActivity.this.openFragment(new ProfileFragment());
                     return true;
-                /*case R.id.request:
-                    MainActivity.this.openFragment(new RequetsFragment());
-                    return true;*/
+                case R.id.request:
+                    if (Helper.isLawyer(this)) {
+                        MainActivity.this.openFragment(new RequetsFragment());
+                    }
+                    return true;
 
             }
             return true;

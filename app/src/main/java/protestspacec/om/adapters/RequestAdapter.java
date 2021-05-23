@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import protestspacec.om.Helper;
 import protestspacec.om.MainActivity;
 import protestspacec.om.Model.Qoutation;
 import protestspacec.om.PaymentActivity;
@@ -50,17 +52,38 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Qoutation qoutation = qoutations.get(position);
 
-        holder.uName.setText(qoutation.getUname());
-        holder.descriptionText.setText(qoutation.getDescription());
+        if (Helper.isLawyer(context)){
+            holder.rejectBtn.setVisibility(View.GONE);
+            holder.acceptBtn.setVisibility(View.GONE);
+            try {
+                holder.uName.setText(qoutation.getPname());
+                holder.descriptionText.setText(qoutation.getPdescription() + "\n\nMy Qoutation\n\n" + qoutation.getDescription());
+                Picasso.get().load(qoutation.getPimage()).into(holder.userImg);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else {
+
+            holder.uName.setText(qoutation.getUname());
+            holder.descriptionText.setText(qoutation.getDescription());
+        }
         holder.priceText.setText(qoutation.getPrice());
         holder.acceptBtn.setOnClickListener(v -> requestAccepted(qoutation));
         holder.rejectBtn.setOnClickListener(v -> requestRejected(qoutation));
+
+        if (qoutation.isAccepted()) {
+            holder.acceptedImg.setVisibility(View.VISIBLE);
+            holder.rejectBtn.setVisibility(View.GONE);
+            holder.acceptBtn.setVisibility(View.GONE);
+        }
+
     }
 
     private void requestAccepted(Qoutation qoutation) {
         //payment work
         Intent intent = new Intent(context, PaymentActivity.class);
         intent.putExtra("price", qoutation.getPrice());
+        intent.putExtra("lawyerId", qoutation.getUid());
         ((MainActivity)context).startActivityForResult(intent, 0);
     }
 
@@ -79,7 +102,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView userImg;
+        ImageView userImg, acceptedImg;
         TextView uName, descriptionText, priceText;
         Button acceptBtn, rejectBtn;
 
@@ -87,6 +110,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             super(itemView);
 
             userImg = itemView.findViewById(R.id.cimg);
+            acceptedImg = itemView.findViewById(R.id.acceptImg);
             uName = itemView.findViewById(R.id.nametv);
             descriptionText = itemView.findViewById(R.id.commenttv);
             priceText = itemView.findViewById(R.id.priceText);

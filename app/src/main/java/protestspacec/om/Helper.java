@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Helper {
 
@@ -131,4 +133,9 @@ progressDialog = new ProgressDialog(context);
 
     }
 
+    public static boolean isLawyer(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("MyPref", 0);
+        String s1 = preferences.getString("AccountType", "");
+        return !Objects.equals(s1, "User");
+    }
 }

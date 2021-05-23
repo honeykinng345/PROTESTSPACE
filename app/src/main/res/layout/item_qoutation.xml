@@ -14,6 +14,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/personicon" />
 
+    <ImageView
+        android:id="@+id/acceptImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/checked"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cimg"
+        app:layout_constraintEnd_toEndOf="@id/cimg"/>
+
 
     <TextView
         android:id="@+id/priceText"

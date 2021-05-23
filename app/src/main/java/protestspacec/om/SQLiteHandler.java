@@ -24,8 +24,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     public static final String COL_3 = "EMAIL";
 
 
-
-
     public SQLiteHandler(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
