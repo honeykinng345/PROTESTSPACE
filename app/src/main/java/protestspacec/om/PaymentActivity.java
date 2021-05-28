@@ -9,6 +9,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -22,6 +23,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class PaymentActivity extends AppCompatActivity {
 
     public String lawyerId;
+    public String postId;
 
     String postData = "";
     private WebView mWebView;
@@ -50,6 +52,7 @@ public class PaymentActivity extends AppCompatActivity {
         Intent intentData = getIntent();
         String price = intentData.getStringExtra("price");
         lawyerId = intentData.getStringExtra("lawyerId");
+        postId = intentData.getStringExtra("postId");
 
         Date Date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddkkmmss");
@@ -249,7 +252,10 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 }
 
+
+
                 i.putExtra("lawyerId", lawyerId);
+                i.putExtra("postId", postId);
                 setResult(RESULT_OK, i);
                 finish();
 

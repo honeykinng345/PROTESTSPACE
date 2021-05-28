@@ -52,6 +52,12 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Qoutation qoutation = qoutations.get(position);
 
+        if (qoutation.getIsAccepted()) {
+            holder.acceptedImg.setVisibility(View.VISIBLE);
+            holder.rejectBtn.setVisibility(View.GONE);
+            holder.acceptBtn.setVisibility(View.GONE);
+        }
+
         if (Helper.isLawyer(context)){
             holder.rejectBtn.setVisibility(View.GONE);
             holder.acceptBtn.setVisibility(View.GONE);
@@ -67,15 +73,12 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             holder.uName.setText(qoutation.getUname());
             holder.descriptionText.setText(qoutation.getDescription());
         }
+
         holder.priceText.setText(qoutation.getPrice());
         holder.acceptBtn.setOnClickListener(v -> requestAccepted(qoutation));
         holder.rejectBtn.setOnClickListener(v -> requestRejected(qoutation));
 
-        if (qoutation.isAccepted()) {
-            holder.acceptedImg.setVisibility(View.VISIBLE);
-            holder.rejectBtn.setVisibility(View.GONE);
-            holder.acceptBtn.setVisibility(View.GONE);
-        }
+
 
     }
 
@@ -84,10 +87,12 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         Intent intent = new Intent(context, PaymentActivity.class);
         intent.putExtra("price", qoutation.getPrice());
         intent.putExtra("lawyerId", qoutation.getUid());
+        intent.putExtra("postId", qoutation.getPid());
         ((MainActivity)context).startActivityForResult(intent, 0);
     }
 
     private void requestRejected(Qoutation qoutation) {
+        //Helper.message(context, postId +"\n" + qoutation.getUid());
         mQoutationRef.child(postId).child(qoutation.getUid()).removeValue().addOnSuccessListener(aVoid -> {
             Toast.makeText(context, "Rejected", Toast.LENGTH_LONG).show();
         }).addOnFailureListener(e -> {

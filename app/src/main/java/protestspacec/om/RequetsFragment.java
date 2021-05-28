@@ -26,8 +26,6 @@ import java.util.Objects;
 import protestspacec.om.Model.Qoutation;
 import protestspacec.om.adapters.RequestAdapter;
 
-import static android.app.Activity.RESULT_OK;
-
 public class RequetsFragment extends Fragment {
 
     ArrayList<Qoutation> qoutations = new ArrayList<>();
@@ -42,9 +40,6 @@ public class RequetsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.request_fragment, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        init();
-
         if (getArguments() != null) {
             postId = getArguments().getString("postId");
             loadData();
@@ -54,6 +49,9 @@ public class RequetsFragment extends Fragment {
             loadLawyerRequests();
         }
 
+        recyclerView = view.findViewById(R.id.recyclerView);
+        init();
+
         return view;
     }
 
@@ -62,7 +60,7 @@ public class RequetsFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         if (recyclerView.getAdapter() == null)
             recyclerView.setAdapter(new RequestAdapter(requireContext(), qoutations, postId));
-        recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
     }
 
     private void loadLawyerRequests() {
@@ -108,7 +106,7 @@ public class RequetsFragment extends Fragment {
         });
     }
 
-    @Override
+   /* @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0){
@@ -120,5 +118,5 @@ public class RequetsFragment extends Fragment {
 
          }else Helper.message(requireContext(), "transcation failed");
         }
-    }
+    }*/
 }

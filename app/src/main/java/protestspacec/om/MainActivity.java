@@ -6,12 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
             //System.out.println("DateFn: ResponseCode:" + ResponseCode);
             if(ResponseCode.equals("000")) {
                 Toast.makeText(getApplicationContext(), "Payment Success", Toast.LENGTH_SHORT).show();
+                String lawyerID = data.getStringExtra("lawyerId");
+                String postId = data.getStringExtra("postId");
+                FirebaseDatabase.getInstance().getReference().child("Qoutation").child(postId).child(lawyerID).child("isAccepted").setValue(true);
             }
             else
             {

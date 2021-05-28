@@ -198,7 +198,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
                         } else {
                             Toast.makeText(context, "fields can't be empty", Toast.LENGTH_LONG).show();
                         }
-
+                        dialog.dismiss();
                     }).setNegativeButton("Cencel", (dialog, which) -> dialog.dismiss()).show();
                 }
             }
