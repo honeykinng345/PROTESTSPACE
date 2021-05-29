@@ -170,36 +170,42 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         mQoutationRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(model.getPostid()).hasChild(myUid)) {
-                    Toast.makeText(context, "already applied", Toast.LENGTH_LONG).show();
-                }else {
-                    View qouteView = mainActivity.getLayoutInflater().inflate(R.layout.pop_qoutation, null);
-                    EditText descriptionText = qouteView.findViewById(R.id.description);
-                    EditText priceText = qouteView.findViewById(R.id.price);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setView(qouteView);
+                try {
+                    if (dataSnapshot.child(model.getPostid()).hasChild(myUid)) {
+                        Toast.makeText(context, "already applied", Toast.LENGTH_LONG).show();
+                    } else {
+                        View qouteView = mainActivity.getLayoutInflater().inflate(R.layout.pop_qoutation, null);
+                        EditText descriptionText = qouteView.findViewById(R.id.description);
+                        EditText priceText = qouteView.findViewById(R.id.price);
 
-                    builder.setPositiveButton("Send", (dialog, which) -> {
-                        String d = descriptionText.getText().toString().trim();
-                        String p = priceText.getText().toString().trim();
-                        if (!TextUtils.isEmpty(d) && !TextUtils.isEmpty(p)) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setView(qouteView);
 
-                            String t = String.valueOf(System.currentTimeMillis());
+                        builder.setPositiveButton("Send", (dialog, which) -> {
+                            String d = descriptionText.getText().toString().trim();
+                            String p = priceText.getText().toString().trim();
+                            if (!TextUtils.isEmpty(d) && !TextUtils.isEmpty(p)) {
 
-                            Qoutation qoutation = new Qoutation(t, myUid, model.getPostid(), model.getName(),
-                                    model.getPostImage(), model.getPostDescription(), mUname, null, p, d, false);
+                                String t = String.valueOf(System.currentTimeMillis());
 
-                            mQoutationRef.child(model.getPostid()).child(myUid).setValue(qoutation).addOnSuccessListener(aVoid -> {
-                                Toast.makeText(context, "Qoutation sent successfully!", Toast.LENGTH_LONG).show();
-                            }).addOnFailureListener(e -> {
-                                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                            });
-                        } else {
-                            Toast.makeText(context, "fields can't be empty", Toast.LENGTH_LONG).show();
-                        }
-                        dialog.dismiss();
-                    }).setNegativeButton("Cencel", (dialog, which) -> dialog.dismiss()).show();
+                                Qoutation qoutation = new Qoutation(t, myUid, model.getPostid(), model.getName(),
+                                        model.getPostImage(), model.getPostDescription(), mUname, null, p, d, false);
+
+                                mQoutationRef.child(model.getPostid()).child(myUid).setValue(qoutation).addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(context, "Qoutation sent successfully!", Toast.LENGTH_LONG).show();
+                                }).addOnFailureListener(e -> {
+                                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                                });
+                            } else {
+                                Toast.makeText(context, "fields can't be empty", Toast.LENGTH_LONG).show();
+                            }
+                            dialog.dismiss();
+                        }).setNegativeButton("Cencel", (dialog, which) -> dialog.dismiss()).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    //Helper.message(context, e.getMessage());
                 }
             }
 

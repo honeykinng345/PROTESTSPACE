@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
 
                 }
                 //PostAdapter Adapter = new PostAdapter(getContext(),postsModelArrayList);
-                MyPostAdapter Adapter = new MyPostAdapter(getContext(), postsModelArrayList, false);
+                MyPostAdapter Adapter = new MyPostAdapter(getActivity(), postsModelArrayList, false);
 
                 // below line is for setting a layout manager for our recycler view.
 
