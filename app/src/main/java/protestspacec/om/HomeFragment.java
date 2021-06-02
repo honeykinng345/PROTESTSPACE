@@ -1,9 +1,12 @@
 package protestspacec.om;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,13 +22,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import protestspacec.om.Model.Posts;
 import protestspacec.om.adapters.MyPostAdapter;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView courseRV;
 
+    EditText searchProductEt;
+    private RecyclerView courseRV;
+    MyPostAdapter Adapter;
     // Arraylist for storing data
     private ArrayList<Posts> postsModelArrayList;
 
@@ -34,9 +40,24 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment, container, false);
         courseRV = view.findViewById(R.id.idRVCourse);
-
-
+        searchProductEt = view.findViewById(R.id.searchProductEt);
         loadData();
+
+        searchProductEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                filter(s.toString());
+            }
+        });
         return view;
     }
 
@@ -50,24 +71,18 @@ public class HomeFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 postsModelArrayList.clear();
-
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
                     try {
                         Posts model = ds.getValue(Posts.class);
                         postsModelArrayList.add(model);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
                 //PostAdapter Adapter = new PostAdapter(getContext(),postsModelArrayList);
-                MyPostAdapter Adapter = new MyPostAdapter(getActivity(), postsModelArrayList, false);
-
+            Adapter = new MyPostAdapter(getActivity(), postsModelArrayList, false);
                 // below line is for setting a layout manager for our recycler view.
-
                 courseRV.setAdapter(Adapter);
                 Adapter.notifyDataSetChanged();
 
@@ -75,13 +90,27 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
-
         // we are initializing our adapter class and passing our arraylist to it.
-
     }
+    private void filter(String text) {
 
+
+
+        ArrayList<Posts> filterdNames = new ArrayList<>();
+
+        //looping through existing elements
+        for (Posts s : postsModelArrayList) {
+            //if the existing elements contains the search input
+            if (s.getName().toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filterdNames.add(s);
+            }
+
+        }
+
+        //calling a method of the adapter class and passing the filtered list
+        Adapter.filterList(filterdNames);
+    }
 }

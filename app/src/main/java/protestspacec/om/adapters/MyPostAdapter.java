@@ -249,6 +249,12 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         return posModelList.size();
     }
 
+    public void filterList(ArrayList<Posts> filterdNames) {
+
+        this.posModelList = filterdNames;
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView postImage;

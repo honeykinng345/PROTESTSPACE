@@ -76,7 +76,7 @@
 
                 android:padding="5dp"
 
-                android:src="@drawable/app_icon" />
+                android:src="@drawable/app_logo" />
 
 
             <EditText

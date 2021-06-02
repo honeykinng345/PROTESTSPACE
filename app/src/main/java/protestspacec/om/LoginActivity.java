@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.loginBtn, R.id.noAccountTv})
+    @OnClick({R.id.loginBtn, R.id.noAccountTv,R.id.forget_password})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.loginBtn:
@@ -78,6 +78,9 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case R.id.noAccountTv:
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                break;
+            case R.id.forget_password:
+                startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
                 break;
         }
     }
